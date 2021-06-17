@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.maritimeconnectivity.eNav</groupId>
-    <artifactId>g1125-schemas</artifactId>
+    <artifactId>g1128-schemas</artifactId>
     <version>0.0.1</version>
 
     <properties>
