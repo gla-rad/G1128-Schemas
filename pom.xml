@@ -52,6 +52,10 @@
                 <configuration>
 
                     <sources>
+                        <source>src/main/resources/xsd/S100/4.0.0/280611/S100Base.xsd</source>
+                        <source>src/main/resources/xsd/S100/4.0.0/280611/S100CI.xsd.xsd</source>
+                        <source>src/main/resources/xsd/S100/4.0.0/280611/S100FC.xsd</source>
+                        <source>src/main/resources/xsd/S100/4.0.0/280611/S100FD.xsd</source>
                         <source>src/main/resources/xsd/ServiceBaseTypesSchema.xsd</source>
                         <source>src/main/resources/xsd/ServiceDesignSchema.xsd</source>
                         <source>src/main/resources/xsd/ServiceInstanceSchema.xsd</source>

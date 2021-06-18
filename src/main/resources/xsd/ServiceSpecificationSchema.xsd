@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ServiceSpecificationSchema="http://efficiensea2.org/maritime-cloud/service-registry/v1/ServiceSpecificationSchema.xsd" targetNamespace="http://efficiensea2.org/maritime-cloud/service-registry/v1/ServiceSpecificationSchema.xsd" elementFormDefault="qualified" version="1.0.2" xml:lang="EN">
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:ServiceSpecificationSchema="http://efficiensea2.org/maritime-cloud/service-registry/v1/ServiceSpecificationSchema.xsd"
+        xmlns:S100Base="http://www.iho.int/S100Base"
+        xmlns:S100FC="http://www.iho.int/S100FC"
+        targetNamespace="http://efficiensea2.org/maritime-cloud/service-registry/v1/ServiceSpecificationSchema.xsd"
+        elementFormDefault="qualified" version="1.0.2" xml:lang="EN">
     <include schemaLocation="ServiceBaseTypesSchema.xsd"/>
+    <!--
+        At the time of writing, no official S100 schema was available online. Please use official schema and import
+        like shown below.
+    -->
+    <!-- <import namespace="<S100 namespace>" schemaLocation="<S100.xsd>"/> -->
     <annotation>
         <documentation>
             Authors:
@@ -15,10 +25,6 @@
         <documentation>
             This formal description of a service specification is intentionally kept
             simple and plain.
-            For all described objects lots of more attributes and related objects could
-            be added and standardized, but in order to get as much adoption as possible
-            the entry barrier should be low and therefore quite some aspects e.g. like
-            when a service would be available have been left out.
         </documentation>
     </annotation>
     <element name="serviceSpecification" type="ServiceSpecificationSchema:ServiceSpecification">
@@ -32,49 +38,49 @@
     <complexType name="ServiceSpecification">
         <annotation>
             <documentation>
-                A service specification describes one dedicated service at logical level in a technology-independent
-                way.
+                A service specification describes one dedicated service at logical level in a technology-
+                Independent way.
+
                 The service specification identifies a service by its id and version. The service specification
                 refers to requirements for the service, defines a service data model at logical level,
                 defines the service interface(s) and provides information about the author(s).
 
                 Elements of a service specification are:
 
-                - name              The human readable service name. The service name should be at maximum a one
+                - name The human readable service name. The service name shall be at maximum a one
                 line brief label for the service. Newer versions of the same service
-                specification should not change the name.
+                specification shall not change the name.
 
-                - id                Globally unique identification of the service. Newer versions of the same
+                - id Globally unique identification of the service. Newer versions of the same
                 service specification shall not change the id.
 
-                - version           Version of the service specification. A service specification is uniquely
+                - version Version of the service specification. A service specification is uniquely
                 identified by its id and version. Any change in the service data model or in the
                 service interface definition requires a new version of the service specification.
 
-                - status			Status of the service specification. One of the values 'provisional', 'released',
+                - status Status of the service specification. One of the values 'provisional', 'released',
                 'deprecated', 'deleted'.
 
-                - description       A human readable short description of the service. The description shall contain
+                - description A human readable short description of the service. The description shall contain
                 an abstract of what a service implementing this specification would actually do.
-
-                - keywords          A list of keywords associated to the service.
+                - keywords A list of keywords associated to the service.
 
                 - isSpatialExclusive Flag to indicate whether the service shall be “spatial exclusive”. “Spatial
                 exclusiveness” means that at most one service instance of the same service
                 specification and providing the same technical specification is allowed to be
                 registered for any geographical area.
 
-                - requirements      Refers to requirements specifications for the service. Business requirements,
-                functional and non-functional requirements should be listed here.
+                - requirements Refers to requirements specifications for the service. Business requirements,
+                functional and non-functional requirements shall be listed here.
                 At least one requirement is mandatory.
 
-                - authorInfos       Refers to administrative information about the authors of the service. At least
+                - authorInfos Refers to administrative information about the authors of the service. At least
                 one author information is mandatory.
 
                 - serviceInterfaces Refers to the definition of service interfaces. At least one service interface
                 shall be defined.
 
-                - serviceDataModel  Mandatory reference to the definition of the logical service data model.
+                - serviceDataModel Mandatory reference to the definition of the logical service data model.
             </documentation>
         </annotation>
         <all>
@@ -116,11 +122,11 @@
 
                 Elements of a requirement are:
 
-                - id        Globally unique requirement identification
+                - id Globally unique requirement identification
 
-                - name      Human readable requirement name/summary. Shall not be longer than one line.
+                - name Human readable requirement name/summary. Shall not be longer than one line.
 
-                - text      The human readable requirement text. Usually formulated in form of a “shall”-statement.
+                - text The human readable requirement text. Usually formulated in form of a “shall”-statement.
 
                 - rationale Rationale for this requirement. Textual explanation of why this requirement exists.
                 Provides background information about the need of the service.
@@ -128,8 +134,8 @@
                 - reference Optional information about where the requirement was originally stated. If the
                 requirement comes from external documents, this attribute shall refer to this source.
 
-                - author    Optional reference(s) to administrative information about the author(s) of the requirement.
-
+                - author Optional reference(s) to administrative information about the author(s) of the
+                requirement.
             </documentation>
         </annotation>
         <all>
@@ -156,26 +162,27 @@
 
                 Elements of a serviceInterface are:
 
-                name                Human readable service interface name. The name shall be no longer than one line.
+                name Human readable service interface name. The name shall be no longer than one line.
 
-                description         Human readable description of the service interface
+                description Human readable description of the service interface
 
-                dataExchangePattern Message exchange pattern can be one of
+                dataExchangePattern Message exchange pattern for the entire interface.
+
+                Message exchange pattern can be one of
                 ONE_WAY,
                 REQUEST_RESPONSE,
                 REQUEST_CALLBACK,
                 PUBLISH_SUBSCRIBE,
                 BROADCAST.
 
-                operations          Refers to the specification of service operations supported by the service
+                operations Refers to the specification of service operations supported by the service
                 interface. At least one operation shall be defined.
 
-                consumerInterfaces  Optional reference to an interface definition that has to be provided by the
+                consumerInterfaces Optional reference to an interface definition that has to be provided by the
                 service consumer in order to complement the service interface.
                 Especially if a publish/subscribe service interface is designed, it is
                 necessary to describe what the service expects to be available on the
                 subscriber side.
-
             </documentation>
         </annotation>
         <all>
@@ -211,11 +218,13 @@
 
                 Elements of a consumerInterface are:
 
-                - name        Human readable interface name. The name shall be no longer than one line.
+                - name Human readable interface name. The name shall be no longer than one line.
 
                 - description Human readable description of the interface.
 
-                - operations  Refers to the specification of service operations supported by the consumer interface.
+                - operations Refers to the specification of service operations supported by the consumer
+                interface.
+
                 At least one operation shall be defined.
             </documentation>
         </annotation>
@@ -239,15 +248,15 @@
 
                 Elements of an operation are:
 
-                - name            Human readable operation name. The name shall be no longer than one line.
+                - name Human readable operation name. The name shall be no longer than one line.
 
-                - description     Human readable description of the operation.
+                - description Human readable description of the operation.
 
                 - returnValueType Optional definition of the return value for the operation. The return value
                 could be a business object or a simple status code. The return value data type
                 has to be defined in the logical service data model.
 
-                - parameterTypes  Definition of one or more parameters for the operation. This could be business
+                - parameterTypes Definition of one or more parameters for the operation. This could be business
                 objects or simple types. Parameters have to be defined in the logical
                 service data model.
             </documentation>
@@ -273,41 +282,62 @@
 
                 Elements of a valueTypeDataModelMapping are:
 
-                - typeReference  Reference to the logical service data model.
+                - typeReference Reference to the logical service data model.
                 It references a type (or element, though type is preferred) in the logical
                 service model by the type's name attribute.
+
+                - parameter Reference to a S-100 parameter. Used if service is S-100 compliant.
+
+                - multiplicity Minimum and maximum number of provided instances, where the maximum number may be
+                infinitive.
+                If no multiplicity is provided a multiplicity of 1 is assumed.
+
+                - direction Determining the direction. Can be one of:
+                in
+                out
+                inout
+
+                - encoding Encoding of the parameter
             </documentation>
         </annotation>
         <all>
-            <element name="typeReference" type="string" minOccurs="1" maxOccurs="1"/>
+            <element name="typeReference" type="string" minOccurs="0" maxOccurs="1"/>
+<!--            <element name="parameter" type="S100Base:S100_Parameter" minOccurs="0" maxOccurs="1"/>-->
+            <element name="multiplicity" type="S100Base:S100_Multiplicity" minOccurs="0" maxOccurs="1"/>
+            <element name="direction" minOccurs="0" maxOccurs="1">
+                <simpleType>
+                    <restriction base="string">
+                        <enumeration value="IN "/>
+                        <enumeration value="OUT"/>
+                        <enumeration value="INOUT"/>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="encoding" type="string" minOccurs="0" maxOccurs="1"/>
         </all>
     </complexType>
     <complexType name="ServiceDataModel">
         <annotation>
             <documentation>
-                The serviceDataModel is a logical model. It is formally described to achieve interoperability
-                and decouple it from implementing physical data models described in e.g. SOAP or REST.
-                The serviceDataModel is described in one of the two sub-elements:
-                either in XSD format (definitionAsXSD)
-                or in any another format, formulated in plaint text (definitionAsText).
-                The model can either be described in-line, or existing schemata can be imported.
-                Exactly one of the two optional sub-elements (definitionAsXSD or definitionAsText) has to be provided.
-
-                Elements of a serviceDataModel are:
-
-                - definitionAsXSD  The definition of the service data model described in XSD.
-                - definitionAsText  The definition of the service data model described in text format.
+                If the service is S-100 compliant it shall link to an existing Feature Catalogue in the
+                featureCatalogue element. The other elements are then not used.
+                If the service is not S-100 compliant: The serviceDataModel is formally described in the
+                sub-element modelDefinition to achieve interoperability and decouple it from implementing physical
+                data models described in e.g. SOAP or REST. Encodings are formally described using sub-element
+                encoding. The model can either be described in-line, or existing schemata can be imported.
+                One service specification has one logical service model. Sub-element modelDefinition has to be
+                provided. Elements of a serviceDataModel are:
+                - featureCatalogue Reference to an S-100 compliant logical data model description. To be used to
+                be S-100 compliant, otherwise the modelDefinition attribute has to be used
+                - modelDefinition Only used if not S-100 compliant. The definition of the service data model
+                described
+                - encoding Only used if not S-100 compliant. The encoding of the attribute modelDefinition
             </documentation>
         </annotation>
         <all>
-            <element name="definitionAsXSD" minOccurs="0" maxOccurs="1">
-                <complexType>
-                    <sequence>
-                        <any namespace="http://www.w3.org/2001/XMLSchema" processContents="lax"/>
-                    </sequence>
-                </complexType>
-            </element>
-            <element name="definitionAsText" type="string" minOccurs="0" maxOccurs="1"/>
+<!--            <element name="featureCatalogue" type="S100FC:S100_FC_FeatureCatalogue" minOccurs="0" maxOccurs="1"/>-->
+            <element name="modelDefinition" type="string" minOccurs="0" maxOccurs="1"/>
+            <element name="encoding" type="string" minOccurs="0" maxOccurs="1"/>
         </all>
     </complexType>
 </schema>

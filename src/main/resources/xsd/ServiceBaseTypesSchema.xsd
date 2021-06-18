@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ServiceSpecificationSchema="http://efficiensea2.org/maritime-cloud/service-registry/v1/ServiceSpecificationSchema.xsd" targetNamespace="http://efficiensea2.org/maritime-cloud/service-registry/v1/ServiceSpecificationSchema.xsd" elementFormDefault="qualified" version="1.0.2" xml:lang="EN">
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:ServiceSpecificationSchema="http://efficiensea2.org/maritime-cloud/service-registry/v1/ServiceSpecificationSchema.xsd"
+        targetNamespace="http://efficiensea2.org/maritime-cloud/service-registry/v1/ServiceSpecificationSchema.xsd"
+        elementFormDefault="qualified" version="1.0.2" xml:lang="EN">
     <annotation>
         <documentation>
             Authors:
@@ -23,9 +26,9 @@
 
                 Elements of an authorInfo are:
 
-                - id          Unique identifier of the author.
+                - id Unique identifier of the author.
 
-                - name        Human readable name of the author.
+                - name Human readable name of the author.
 
                 - description Human readable description of the author.
 
@@ -45,10 +48,10 @@
     <complexType name="VendorInfo">
         <annotation>
             <documentation>
-                Describes the vendor producing and/or providing the service instance. Contains the same information as the
-                AuthorInfo plus the isCommercial flag.
+                Describes the vendor producing and/or providing the service instance.
+                Contains the same information as the AuthorInfo plus the isCommercial flag.
 
-                - isCommercial:  Optional indication on the commercial status of the vendor.
+                - isCommercial Optional indication on the commercial status of the vendor.
             </documentation>
         </annotation>
         <complexContent>
@@ -58,7 +61,6 @@
                 </sequence>
             </extension>
         </complexContent>
-
     </complexType>
     <simpleType name="ServiceIdentifier">
         <annotation>
@@ -83,11 +85,12 @@
             <documentation>
                 Service status may be one of the values listed below. Service specifications,
                 service designs and service instances each have their own status value.
-                provisional		the service specification/design is not officially released, the service instance is available, but not in official operation
-                released		the service specification/design/instance is officially released / in operation
-                deprecated	the service specification/design/instance is still available, but end of life is already envisaged.
-                deleted			the service specification/design/instance is not available any more.
-                simulated		the service specification/design/instance is to be used in a non-operational simulation environment only.
+                provisional     the service specification/design is not officially released, the service instance is
+                available, but not in official operation
+                released        the service specification/design/instance is officially released / in operation
+                deprecated      the service specification/design/instance is still available, but end of life is already
+                envisaged.
+                deleted         the service specification/design/instance is not available any more.
             </documentation>
         </annotation>
         <restriction base="string">
@@ -95,7 +98,6 @@
             <enumeration value="released"/>
             <enumeration value="deprecated"/>
             <enumeration value="deleted"/>
-            <enumeration value="simulated"/>
         </restriction>
     </simpleType>
 </schema>
