@@ -3,7 +3,7 @@ JAXB generated classed for the G1128 specification definitions.
 
 ## General Information
 This repository is actually a Maven project. It contains the schema definitions
-of the G1125 standard.
+of the G1128 standard.
 
     src/main/resources/xsd/ServiceBaseTypesSchema.xsd
     src/main/resources/xsd/ServiceDesignSchema.xsd
