@@ -6,7 +6,7 @@
 
     <groupId>net.maritimeconnectivity.eNav</groupId>
     <artifactId>g1128-schemas</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.4-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -50,7 +50,9 @@
                     </execution>
                 </executions>
                 <configuration>
-
+                    <xjbSources>
+                        <xjbSource>src/main/resources/xjb/bindings.xjb</xjbSource>
+                    </xjbSources>
                     <sources>
                         <source>src/main/resources/xsd/S100/4.0.0/280611/S100Base.xsd</source>
                         <source>src/main/resources/xsd/S100/4.0.0/280611/S100CI.xsd.xsd</source>
