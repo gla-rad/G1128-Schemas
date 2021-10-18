@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-        xmlns:ServiceSpecificationSchema="http://efficiensea2.org/maritime-cloud/service-registry/v1/ServiceSpecificationSchema.xsd"
-        targetNamespace="http://efficiensea2.org/maritime-cloud/service-registry/v1/ServiceSpecificationSchema.xsd"
+        xmlns:ServiceSpecificationSchema="http://iala-aism.org/g1128/v1.3/ServiceSpecificationSchema.xsd"
+        targetNamespace="http://iala-aism.org/g1128/v1.3/ServiceSpecificationSchema.xsd"
         elementFormDefault="qualified" version="1.0.2" xml:lang="EN">
     <annotation>
         <documentation>
@@ -99,5 +99,146 @@
             <enumeration value="deprecated"/>
             <enumeration value="deleted"/>
         </restriction>
+    </simpleType>
+    <simpleType name="ServiceType">
+        <annotation>
+            <documentation>
+                The service type shall reflect the associated operational service type provided according to defined
+                types in paragraph Service Type. If type not yet defined, a proposed type will be reviewed and added
+                when accepted, i.e. an open enumeration.
+            </documentation>
+        </annotation>
+        <union>
+            <simpleType>
+                <restriction base="string">
+                    <enumeration value="VTS Information service (INS)">
+                        <annotation>
+                            <documentation>MS 1 - VTS Information service (INS)</documentation>
+                        </annotation>
+                    </enumeration>
+                    <enumeration value="VTS Navigational assistance service (NAS)">
+                        <annotation>
+                            <documentation>MS 2 - VTS Navigational assistance service (NAS)</documentation>
+                        </annotation>
+                    </enumeration>
+                    <enumeration value="Traffic organization service (TOS)">
+                        <annotation>
+                            <documentation>MS 3 - Traffic organization service (TOS)</documentation>
+                        </annotation>
+                    </enumeration>
+                    <enumeration value="Port support service (PSS)">
+                        <annotation>
+                            <documentation>MS 4 - Port support service (PSS)</documentation>
+                        </annotation>
+                    </enumeration>
+                    <enumeration value="Maritime safety information (MSI) service">
+                        <annotation>
+                            <documentation>MS 5 - Maritime safety information (MSI) service</documentation>
+                        </annotation>
+                    </enumeration>
+                    <enumeration value="Pilotage service">
+                        <annotation>
+                            <documentation>MS 6 - Pilotage service</documentation>
+                        </annotation>
+                    </enumeration>
+                    <enumeration value="Tug service">
+                        <annotation>
+                            <documentation>MS 7 - Tug service</documentation>
+                        </annotation>
+                    </enumeration>
+                    <enumeration value="Vessel shore reporting">
+                        <annotation>
+                            <documentation>MS 8 - Vessel shore reporting</documentation>
+                        </annotation>
+                    </enumeration>
+                    <enumeration value="Telemedical assistance service (TMAS)">
+                        <annotation>
+                            <documentation>MS 9 - Telemedical assistance service (TMAS)</documentation>
+                        </annotation>
+                    </enumeration>
+                    <enumeration value="Maritime assistance service (MAS)">
+                        <annotation>
+                            <documentation>MS 10 - Maritime assistance service (MAS)</documentation>
+                        </annotation>
+                    </enumeration>
+                    <enumeration value="Nautical chart service">
+                        <annotation>
+                            <documentation>MS 11 - Nautical chart service</documentation>
+                        </annotation>
+                    </enumeration>
+                    <enumeration value="Nautical publications service">
+                        <annotation>
+                            <documentation>MS 12 - Nautical publications service</documentation>
+                        </annotation>
+                    </enumeration>
+                    <enumeration value="Ice navigation service">
+                        <annotation>
+                            <documentation>MS 13 - Ice navigation service</documentation>
+                        </annotation>
+                    </enumeration>
+                    <enumeration value="Meteorological information service">
+                        <annotation>
+                            <documentation>MS 14 - Meteorological information service</documentation>
+                        </annotation>
+                    </enumeration>
+                    <enumeration value="Real-time hydrographic and environmental information services">
+                        <annotation>
+                            <documentation>MS 15 - Real-time hydrographic and environmental information services</documentation>
+                        </annotation>
+                    </enumeration>
+                    <enumeration value="Search and rescue (SAR) service">
+                        <annotation>
+                            <documentation>MS 16 - Search and rescue (SAR) service</documentation>
+                        </annotation>
+                    </enumeration>
+                </restriction>
+            </simpleType>
+            <simpleType>
+                <restriction base="string">
+                    <pattern value="other: [a-zA-Z0-9\(\)]+( [a-zA-Z0-9\(\)]+)*"/>
+                </restriction>
+            </simpleType>
+        </union>
+    </simpleType>
+    <simpleType name="MMSI">
+        <annotation>
+            <documentation>
+                Maritime Mobile Service Identity (MMSI) is a unique 9 digit number that is assigned to a (Digital
+                Selective Calling) DSC radio or an AIS unit.
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <length value="9" />
+            <pattern value="^[0-9]{9}$" />
+        </restriction>
+    </simpleType>
+    <simpleType name="IMO">
+        <annotation>
+            <documentation>
+                The International Maritime Organization (IMO) number is a unique identifier for ships, registered ship
+                owners and management companies.
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <length value="10" />
+            <pattern value="^IMO[0-9]{7}$" />
+        </restriction>
+    </simpleType>
+    <simpleType name="UnLoCode">
+        <annotation>
+            <documentation>
+                The United Nations Code for Trade and Transport Locations.
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <length value="5" />
+            <pattern value="^[a-zA-Z]{2}[a-zA-Z2-9]{3}$" />
+        </restriction>
+    </simpleType>
+    <simpleType name="CharacterStringList">
+        <list itemType="string"/>
+    </simpleType>
+    <simpleType name="ServiceTypeList">
+        <list itemType="ServiceSpecificationSchema:ServiceType" />
     </simpleType>
 </schema>
