@@ -195,7 +195,7 @@
             </simpleType>
             <simpleType>
                 <restriction base="string">
-                    <pattern value="other: [a-zA-Z0-9\(\)]+( [a-zA-Z0-9\(\)]+)*"/>
+                    <pattern value="other: [a-zA-Z0-9\(\)]+( [a-zA-Z0-9\(\)\s]+)*"/>
                 </restriction>
             </simpleType>
         </union>
