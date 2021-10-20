@@ -111,82 +111,82 @@
         <union>
             <simpleType>
                 <restriction base="string">
-                    <enumeration value="VTS Information service (INS)">
+                    <enumeration value="VTSInformationService">
                         <annotation>
                             <documentation>MS 1 - VTS Information service (INS)</documentation>
                         </annotation>
                     </enumeration>
-                    <enumeration value="VTS Navigational assistance service (NAS)">
+                    <enumeration value="VTSNavigationalAssistanceService">
                         <annotation>
                             <documentation>MS 2 - VTS Navigational assistance service (NAS)</documentation>
                         </annotation>
                     </enumeration>
-                    <enumeration value="Traffic organization service (TOS)">
+                    <enumeration value="TrafficOrganizationService">
                         <annotation>
                             <documentation>MS 3 - Traffic organization service (TOS)</documentation>
                         </annotation>
                     </enumeration>
-                    <enumeration value="Port support service (PSS)">
+                    <enumeration value="PortSupportService">
                         <annotation>
                             <documentation>MS 4 - Port support service (PSS)</documentation>
                         </annotation>
                     </enumeration>
-                    <enumeration value="Maritime safety information (MSI) service">
+                    <enumeration value="MaritimeSafetyInformationService">
                         <annotation>
                             <documentation>MS 5 - Maritime safety information (MSI) service</documentation>
                         </annotation>
                     </enumeration>
-                    <enumeration value="Pilotage service">
+                    <enumeration value="PilotageService">
                         <annotation>
                             <documentation>MS 6 - Pilotage service</documentation>
                         </annotation>
                     </enumeration>
-                    <enumeration value="Tug service">
+                    <enumeration value="TugService">
                         <annotation>
                             <documentation>MS 7 - Tug service</documentation>
                         </annotation>
                     </enumeration>
-                    <enumeration value="Vessel shore reporting">
+                    <enumeration value="VesselShoreReporting">
                         <annotation>
                             <documentation>MS 8 - Vessel shore reporting</documentation>
                         </annotation>
                     </enumeration>
-                    <enumeration value="Telemedical assistance service (TMAS)">
+                    <enumeration value="TelemedicalAssistanceService">
                         <annotation>
                             <documentation>MS 9 - Telemedical assistance service (TMAS)</documentation>
                         </annotation>
                     </enumeration>
-                    <enumeration value="Maritime assistance service (MAS)">
+                    <enumeration value="MaritimeAssistanceService">
                         <annotation>
                             <documentation>MS 10 - Maritime assistance service (MAS)</documentation>
                         </annotation>
                     </enumeration>
-                    <enumeration value="Nautical chart service">
+                    <enumeration value="NauticalChartService">
                         <annotation>
                             <documentation>MS 11 - Nautical chart service</documentation>
                         </annotation>
                     </enumeration>
-                    <enumeration value="Nautical publications service">
+                    <enumeration value="NauticalPublicationsService">
                         <annotation>
                             <documentation>MS 12 - Nautical publications service</documentation>
                         </annotation>
                     </enumeration>
-                    <enumeration value="Ice navigation service">
+                    <enumeration value="IceNavigationService">
                         <annotation>
                             <documentation>MS 13 - Ice navigation service</documentation>
                         </annotation>
                     </enumeration>
-                    <enumeration value="Meteorological information service">
+                    <enumeration value="MeteorologicalInformationService">
                         <annotation>
                             <documentation>MS 14 - Meteorological information service</documentation>
                         </annotation>
                     </enumeration>
-                    <enumeration value="Real-time hydrographic and environmental information services">
+                    <enumeration value="RealTimeHydrographicAndEnvironmentalInformationServices">
                         <annotation>
                             <documentation>MS 15 - Real-time hydrographic and environmental information services</documentation>
                         </annotation>
                     </enumeration>
-                    <enumeration value="Search and rescue (SAR) service">
+                    <enumeration value="SearchAndRescueService">
                         <annotation>
                             <documentation>MS 16 - Search and rescue (SAR) service</documentation>
                         </annotation>
@@ -195,7 +195,7 @@
             </simpleType>
             <simpleType>
                 <restriction base="string">
-                    <pattern value="other: [a-zA-Z0-9\(\)]+( [a-zA-Z0-9\(\)\s]+)*"/>
+                    <pattern value="other:[a-zA-Z0-9]+( [a-zA-Z0-9]+)*"/>
                 </restriction>
             </simpleType>
         </union>
@@ -209,7 +209,7 @@
         </annotation>
         <restriction base="string">
             <length value="9" />
-            <pattern value="^[0-9]{9}$" />
+            <pattern value="[0-9]{9}" />
         </restriction>
     </simpleType>
     <simpleType name="IMO">
@@ -220,8 +220,8 @@
             </documentation>
         </annotation>
         <restriction base="string">
-            <length value="10" />
-            <pattern value="^IMO[0-9]{7}$" />
+            <length value="7" />
+            <pattern value="[0-9]{7}" />
         </restriction>
     </simpleType>
     <simpleType name="UnLoCode">
@@ -232,7 +232,7 @@
         </annotation>
         <restriction base="string">
             <length value="5" />
-            <pattern value="^[a-zA-Z]{2}[a-zA-Z2-9]{3}$" />
+            <pattern value="[a-zA-Z]{2}[a-zA-Z2-9]{3}" />
         </restriction>
     </simpleType>
     <simpleType name="CharacterStringList">
