@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-        xmlns:ServiceSpecificationSchema="http://efficiensea2.org/maritime-cloud/service-registry/v1/ServiceSpecificationSchema.xsd"
+        xmlns:ServiceSpecificationSchema="http://iala-aism.org/g1128/v1.3/ServiceSpecificationSchema.xsd"
         xmlns:S100Base="http://www.iho.int/S100Base"
         xmlns:S100FC="http://www.iho.int/S100FC"
-        targetNamespace="http://efficiensea2.org/maritime-cloud/service-registry/v1/ServiceSpecificationSchema.xsd"
+        targetNamespace="http://iala-aism.org/g1128/v1.3/ServiceSpecificationSchema.xsd"
         elementFormDefault="qualified" version="1.0.2" xml:lang="EN">
     <include schemaLocation="ServiceBaseTypesSchema.xsd"/>
     <!--
@@ -89,7 +89,7 @@
             <element name="name" type="string" minOccurs="1" maxOccurs="1"/>
             <element name="status" type="ServiceSpecificationSchema:ServiceStatus" minOccurs="1" maxOccurs="1"/>
             <element name="description" type="string" minOccurs="1" maxOccurs="1"/>
-            <element name="keywords" type="string" minOccurs="0" maxOccurs="1"/>
+            <element name="keywords" type="ServiceSpecificationSchema:CharacterStringList" minOccurs="0" maxOccurs="1"/>
             <element name="isSpatialExclusive" type="boolean" default="false" minOccurs="0" maxOccurs="1"/>
             <element name="requirements" minOccurs="1" maxOccurs="1">
                 <complexType>
@@ -302,7 +302,7 @@
         </annotation>
         <all>
             <element name="typeReference" type="string" minOccurs="0" maxOccurs="1"/>
-<!--            <element name="parameter" type="S100Base:S100_Parameter" minOccurs="0" maxOccurs="1"/>-->
+            <element name="parameter" type="ServiceSpecificationSchema:S100_Parameter" minOccurs="0" maxOccurs="1"/>
             <element name="multiplicity" type="S100Base:S100_Multiplicity" minOccurs="0" maxOccurs="1"/>
             <element name="direction" minOccurs="0" maxOccurs="1">
                 <simpleType>
@@ -335,9 +335,25 @@
             </documentation>
         </annotation>
         <all>
-<!--            <element name="featureCatalogue" type="S100FC:S100_FC_FeatureCatalogue" minOccurs="0" maxOccurs="1"/>-->
+            <element name="featureCatalogue" minOccurs="0" maxOccurs="1">
+                <complexType>
+                    <all>
+                        <element ref="S100FC:S100_FC_FeatureCatalogue" minOccurs="1" maxOccurs="1"/>
+                    </all>
+                </complexType>
+            </element>
             <element name="modelDefinition" type="string" minOccurs="0" maxOccurs="1"/>
             <element name="encoding" type="string" minOccurs="0" maxOccurs="1"/>
+        </all>
+    </complexType>
+    <complexType name="S100_Parameter">
+        <annotation>
+            <documentation>
+                Reference to the S-100 attribute.
+            </documentation>
+        </annotation>
+        <all>
+            <element name="type" type="S100FC:S100_FC_NamedType" minOccurs="1" maxOccurs="1"/>
         </all>
     </complexType>
 </schema>

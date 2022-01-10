@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-        xmlns:ServiceInstanceSchema="http://efficiensea2.org/maritime-cloud/service-registry/v1/ServiceInstanceSchema.xsd"
-        xmlns:ServiceSpecificationSchema="http://efficiensea2.org/maritime-cloud/service-registry/v1/ServiceSpecificationSchema.xsd"
-        targetNamespace="http://efficiensea2.org/maritime-cloud/service-registry/v1/ServiceInstanceSchema.xsd"
+        xmlns:ServiceInstanceSchema="http://iala-aism.org/g1128/v1.3/ServiceInstanceSchema.xsd"
+        xmlns:ServiceSpecificationSchema="http://iala-aism.org/g1128/v1.3/ServiceSpecificationSchema.xsd"
+        targetNamespace="http://iala-aism.org/g1128/v1.3/ServiceInstanceSchema.xsd"
         elementFormDefault="qualified" version="1.0.2" xml:lang="EN">
-    <import namespace="http://efficiensea2.org/maritime-cloud/service-registry/v1/ServiceSpecificationSchema.xsd" schemaLocation="ServiceBaseTypesSchema.xsd"/>
+    <import namespace="http://iala-aism.org/g1128/v1.3/ServiceSpecificationSchema.xsd" schemaLocation="ServiceBaseTypesSchema.xsd"/>
     <annotation>
         <documentation>
             Authors:
@@ -96,11 +96,11 @@
             <element name="name" type="string" minOccurs="1" maxOccurs="1"/>
             <element name="status" type="ServiceSpecificationSchema:ServiceStatus" minOccurs="1" maxOccurs="1"/>
             <element name="description" type="string" minOccurs="1" maxOccurs="1"/>
-            <element name="keywords" type="string" minOccurs="1" maxOccurs="1"/>
+            <element name="keywords" type="ServiceSpecificationSchema:CharacterStringList" minOccurs="1" maxOccurs="1"/>
             <element name="endpoint" type="string" minOccurs="1" maxOccurs="1"/>
-            <element name="MMSI" type="string" minOccurs="0" maxOccurs="1"/>
-            <element name="IMO" type="string" minOccurs="0" maxOccurs="1"/>
-            <element name="serviceType" type="string" minOccurs="0" maxOccurs="1"/>
+            <element name="MMSI" type="ServiceSpecificationSchema:MMSI" minOccurs="0" maxOccurs="1"/>
+            <element name="IMO" type="ServiceSpecificationSchema:IMO" minOccurs="0" maxOccurs="1"/>
+            <element name="serviceType" type="ServiceSpecificationSchema:ServiceTypeList" minOccurs="0" maxOccurs="1"/>
             <element name="requiresAuthorization" type="boolean" minOccurs="1" maxOccurs="1"/>
             <element name="offersServiceLevel" type="ServiceInstanceSchema:ServiceLevel" minOccurs="1" maxOccurs="1"/>
             <element name="coversAreas" minOccurs="1" maxOccurs="1" type="ServiceInstanceSchema:CoverageInfo"/>
@@ -148,9 +148,9 @@
         </sequence>
     </complexType>
     <complexType name="CoverageInfo">
-        <choice>
-            <element name="coversArea" type="ServiceInstanceSchema:CoverageArea" minOccurs="0" maxOccurs="unbounded"/>
-            <element name="unLoCode" type="string" minOccurs="0" maxOccurs="1"/>
+        <choice minOccurs="1" maxOccurs="unbounded">
+            <element name="coversArea" type="ServiceInstanceSchema:CoverageArea"/>
+            <element name="unLoCode" type="ServiceSpecificationSchema:UnLoCode"/>
         </choice>
     </complexType>
     <complexType name="CoverageArea">
