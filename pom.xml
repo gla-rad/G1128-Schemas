@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.maritimeconnectivity.eNav</groupId>
-    <artifactId>g1128-schemas</artifactId>
+    <artifactId>g1128-schemas-jakarta</artifactId>
     <version>0.1.4</version>
 
     <properties>
