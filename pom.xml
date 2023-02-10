@@ -6,7 +6,7 @@
 
     <groupId>net.maritimeconnectivity.eNav</groupId>
     <artifactId>g1128-schemas</artifactId>
-    <version>0.1.3</version>
+    <version>0.1.4</version>
 
     <properties>
         <maven.min.version>3.0.0</maven.min.version>
