@@ -52,3 +52,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Don't include the generated Code ###
+/src/main/generated/
