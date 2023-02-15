@@ -6,7 +6,7 @@
 
     <groupId>net.maritimeconnectivity.eNav</groupId>
     <artifactId>g1128-schemas</artifactId>
-    <version>0.1.4</version>
+    <version>0.1.5</version>
 
     <properties>
         <maven.min.version>3.0.0</maven.min.version>
@@ -15,6 +15,12 @@
         <maven.compiler.target>17</maven.compiler.target>
         <maven-deploy-plugin.version>3.0.0-M2</maven-deploy-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+        <maven-shade-plugin.version>3.4.1</maven-shade-plugin.version>
+        <version.maven.jakartaee>9.0.0</version.maven.jakartaee>
+        <version.maven.jaxb.xjc>2.3.8</version.maven.jaxb.xjc>
+        <version.maven.jakarta.activation>1.2.2</version.maven.jakarta.activation>
+        <version.maven.javax.xml.bind-api>2.3.1</version.maven.javax.xml.bind-api>
+        <version.maven.jakarta.xml.bind-api>4.0.0</version.maven.jakarta.xml.bind-api>
     </properties>
 
     <repositories>
@@ -122,14 +128,45 @@
                     <dependency>
                         <groupId>org.glassfish.jaxb</groupId>
                         <artifactId>jaxb-xjc</artifactId>
-                        <version>2.3.8</version>
+                        <version>${version.maven.jaxb.xjc}</version>
                     </dependency>
                     <dependency>
                         <groupId>com.sun.activation</groupId>
                         <artifactId>jakarta.activation</artifactId>
-                        <version>1.2.2</version>
+                        <version>${version.maven.jakarta.activation}</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>${maven-shade-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>jakarta</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <shadedArtifactAttached>true</shadedArtifactAttached>
+                            <shadedClassifierName>jakarta</shadedClassifierName>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <artifactSet>
+                                <includes>
+                                    <include>${project.groupId}:${project.artifactId}</include>
+                                </includes>
+                            </artifactSet>
+                            <relocations>
+                                <relocation>
+                                    <pattern>javax.xml.bind</pattern>
+                                    <shadedPattern>jakarta.xml.bind</shadedPattern>
+                                </relocation>
+                            </relocations>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
 
@@ -140,20 +177,14 @@
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
-            <version>2.3.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.glassfish.jaxb</groupId>
-            <artifactId>jaxb-runtime</artifactId>
-            <version>2.3.2</version>
+            <version>${version.maven.javax.xml.bind-api}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>com.sun.activation</groupId>
-            <artifactId>jakarta.activation</artifactId>
-            <version>1.2.2</version>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>${version.maven.jakarta.xml.bind-api}</version>
             <scope>provided</scope>
         </dependency>
 
