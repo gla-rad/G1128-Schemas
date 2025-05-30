@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-        xmlns:ServiceInstanceSchema="http://iala-aism.org/g1128/v1.3/ServiceInstanceSchema.xsd"
-        xmlns:ServiceSpecificationSchema="http://iala-aism.org/g1128/v1.3/ServiceSpecificationSchema.xsd"
-        targetNamespace="http://iala-aism.org/g1128/v1.3/ServiceInstanceSchema.xsd"
-        elementFormDefault="qualified" version="1.0.2" xml:lang="EN">
-    <import namespace="http://iala-aism.org/g1128/v1.3/ServiceSpecificationSchema.xsd" schemaLocation="ServiceBaseTypesSchema.xsd"/>
+        xmlns:ServiceInstanceSchema="http://iala-aism.org/g1128/v1.7/ServiceInstanceSchema.xsd"
+        targetNamespace="http://iala-aism.org/g1128/v1.7/ServiceInstanceSchema.xsd"
+        elementFormDefault="qualified" version="1.0.2" xml:lang="en">
     <annotation>
         <documentation>
-            Authors:
+            Authors: (initial version)
             EfficienSea2 WP 3 Partners
             Thomas Lutz
             Christoph Rihacek
             Josef Jahn
             Hubert Künig
+            Ramin Miraftabi (latest version with significant rework)
         </documentation>
     </annotation>
     <annotation>
@@ -91,25 +90,53 @@
             </documentation>
         </annotation>
         <all>
-            <element name="id" type="ServiceSpecificationSchema:ServiceIdentifier" minOccurs="1" maxOccurs="1"/>
-            <element name="version" type="ServiceSpecificationSchema:ServiceVersion" minOccurs="1" maxOccurs="1"/>
+            <element name="id" type="ServiceInstanceSchema:MRN" minOccurs="1" maxOccurs="1"/>
+            <element name="version" type="string" minOccurs="1" maxOccurs="1"/>
             <element name="name" type="string" minOccurs="1" maxOccurs="1"/>
-            <element name="status" type="ServiceSpecificationSchema:ServiceStatus" minOccurs="1" maxOccurs="1"/>
+            <element name="status" type="ServiceInstanceSchema:ServiceStatus" minOccurs="1" maxOccurs="1"/>
             <element name="description" type="string" minOccurs="1" maxOccurs="1"/>
-            <element name="keywords" type="ServiceSpecificationSchema:CharacterStringList" minOccurs="1" maxOccurs="1"/>
+            <element name="keywords" type="ServiceInstanceSchema:CharacterStringList" minOccurs="1" maxOccurs="1"/>
             <element name="endpoint" type="string" minOccurs="1" maxOccurs="1"/>
-            <element name="MMSI" type="ServiceSpecificationSchema:MMSI" minOccurs="0" maxOccurs="1"/>
-            <element name="IMO" type="ServiceSpecificationSchema:IMO" minOccurs="0" maxOccurs="1"/>
-            <element name="serviceType" type="ServiceSpecificationSchema:ServiceTypeList" minOccurs="0" maxOccurs="1"/>
+            <element name="statusEndpoint" type="string" minOccurs="1" maxOccurs="1"/>
+            <element name="MMSI" type="ServiceInstanceSchema:MMSI" minOccurs="0" maxOccurs="1"/>
+            <element name="IMO" type="ServiceInstanceSchema:IMO" minOccurs="0" maxOccurs="1"/>
+            <element name="serviceTypes" type="ServiceInstanceSchema:ServiceTypeList" minOccurs="0" maxOccurs="1"/>
             <element name="requiresAuthorization" type="boolean" minOccurs="1" maxOccurs="1"/>
-            <element name="offersServiceLevel" type="ServiceInstanceSchema:ServiceLevel" minOccurs="1" maxOccurs="1"/>
             <element name="coversAreas" minOccurs="1" maxOccurs="1" type="ServiceInstanceSchema:CoverageInfo"/>
-            <element name="implementsServiceDesign" type="ServiceInstanceSchema:ServiceDesignReference" minOccurs="1" maxOccurs="1"/>
-            <element name="producedBy" type="ServiceSpecificationSchema:VendorInfo" minOccurs="1" maxOccurs="1"/>
-            <element name="providedBy" type="ServiceSpecificationSchema:VendorInfo" minOccurs="1" maxOccurs="1"/>
+            <element name="designsServiceSpecifications" minOccurs="1" maxOccurs="1">
+                <complexType>
+                    <sequence>
+                        <element name="designsServiceSpecifications" type="ServiceInstanceSchema:SpecReference" minOccurs="1" maxOccurs="unbounded"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="implementsServiceDesigns" minOccurs="1" maxOccurs="1">
+                <complexType>
+                    <sequence>
+                        <element name="implementsServiceDesign" type="ServiceInstanceSchema:SpecReference" minOccurs="1" maxOccurs="unbounded"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="offersTransports" minOccurs="1" maxOccurs="1">
+                <complexType>
+                    <sequence>
+                        <element name="offersTransport" type="ServiceInstanceSchema:Transport" minOccurs="1" maxOccurs="unbounded"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="serviceDataModels" minOccurs="1" maxOccurs="1">
+                <complexType>
+                    <sequence>
+                        <element name="serviceDataModel" type="ServiceInstanceSchema:ServiceDataModel" minOccurs="1" maxOccurs="unbounded"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="serviceApiDoc" type="ServiceInstanceSchema:ServiceApiDoc" minOccurs="1" maxOccurs="1"/>
+            <element name="producedBy" type="ServiceInstanceSchema:VendorInfo" minOccurs="1" maxOccurs="1"/>
+            <element name="providedBy" type="ServiceInstanceSchema:VendorInfo" minOccurs="1" maxOccurs="1"/>
         </all>
     </complexType>
-    <complexType name="ServiceDesignReference">
+    <complexType name="SpecReference">
         <annotation>
             <documentation>
                 A reference to the service design that is implemented by the service instance.
@@ -123,34 +150,14 @@
             </documentation>
         </annotation>
         <all>
-            <element name="id" type="ServiceSpecificationSchema:ServiceIdentifier" minOccurs="1" maxOccurs="1"/>
-            <element name="version" type="ServiceSpecificationSchema:ServiceVersion" minOccurs="1" maxOccurs="1"/>
+            <element name="id" type="ServiceInstanceSchema:MRN" minOccurs="1" maxOccurs="1"/>
+            <element name="version" type="string" minOccurs="1" maxOccurs="1"/>
         </all>
-    </complexType>
-    <complexType name="ServiceLevel">
-        <annotation>
-            <documentation>
-                Defines the service availability level.
-
-                Elements of a serviceLevel are:
-
-                - name Human readable service level name. The name shall be no longer than one line.
-
-                - description Human readable description of the service level
-
-                - availability Indicates the guaranteed availability of the service in %, (e.g. 99.9).
-            </documentation>
-        </annotation>
-        <sequence>
-            <element name="availability" type="float" minOccurs="1" maxOccurs="1"/>
-            <element name="name" type="string" minOccurs="1" maxOccurs="1"/>
-            <element name="description" type="string" minOccurs="1" maxOccurs="1"/>
-        </sequence>
     </complexType>
     <complexType name="CoverageInfo">
         <choice minOccurs="1" maxOccurs="unbounded">
             <element name="coversArea" type="ServiceInstanceSchema:CoverageArea"/>
-            <element name="unLoCode" type="ServiceSpecificationSchema:UnLoCode"/>
+            <element name="unLoCode" type="ServiceInstanceSchema:UnLoCode"/>
         </choice>
     </complexType>
     <complexType name="CoverageArea">
@@ -175,6 +182,226 @@
             <element name="name" type="string" minOccurs="1" maxOccurs="1"/>
             <element name="description" type="string" minOccurs="1" maxOccurs="1"/>
             <element name="geometryAsWKT" type="string" default="POLYGON(-180 -90, 180 -90, 180 90, -180 90, -180 -90)" minOccurs="0" maxOccurs="1"/>
+        </all>
+    </complexType>
+    <simpleType name="ServiceStatus" final="restriction">
+        <annotation>
+            <documentation>
+                Service status may be one of the values listed below. Service specifications,
+                service designs and service instances each have their own status value.
+                provisional     the service specification/design is not officially released, the service instance is
+                available, but not in official operation
+                released        the service specification/design/instance is officially released / in operation
+                deprecated      the service specification/design/instance is still available, but end of life is already
+                envisaged.
+                deleted         the service specification/design/instance is not available any more.
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <enumeration value="provisional"/>
+            <enumeration value="released"/>
+            <enumeration value="deprecated"/>
+            <enumeration value="deleted"/>
+        </restriction>
+    </simpleType>
+    <simpleType name="MRN">
+        <annotation>
+            <documentation>Marine Resource Name identifier, based on URN.
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <pattern value="[uU][rR][nN]:[mM][rR][nN]:[A-Za-z0-9][A-Za-z0-9-]+:[A-Za-z0-9()+,\-.:=@;$_!*'%/?#]+"/>
+        </restriction>
+    </simpleType>
+    <simpleType name="MMSI">
+        <annotation>
+            <documentation>
+                Maritime Mobile Service Identity (MMSI) is a unique 9 digit number that is assigned to a (Digital
+                Selective Calling) DSC radio or an AIS unit.
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <length value="9" />
+            <pattern value="^[0-9]{9}$" />
+        </restriction>
+    </simpleType>
+    <simpleType name="IMO">
+        <annotation>
+            <documentation>
+                The International Maritime Organization (IMO) number is a unique identifier for ships, registered ship
+                owners and management companies.
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <length value="10" />
+            <pattern value="^IMO[0-9]{7}$" />
+        </restriction>
+    </simpleType>
+    <simpleType name="UnLoCode">
+        <annotation>
+            <documentation>
+                The United Nations Code for Trade and Transport Locations.
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <length value="5" />
+            <pattern value="^[a-zA-Z]{2}[a-zA-Z2-9]{3}$" />
+        </restriction>
+    </simpleType>
+    <simpleType name="CharacterStringList">
+        <list itemType="string"/>
+    </simpleType>
+    <simpleType name="ServiceTypeList">
+        <list itemType="ServiceInstanceSchema:ServiceType" />
+    </simpleType>
+    <simpleType name="ServiceType">
+        <annotation>
+            <documentation>
+                The service type shall reflect the associated operational service type provided according to defined
+                types in paragraph Service Type. If type not yet defined, a proposed type will be reviewed and added
+                when accepted, i.e. an open enumeration.
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <enumeration value="MS1" />
+            <enumeration value="MS2"/>
+            <enumeration value="MS3"/>
+            <enumeration value="MS4"/>
+            <enumeration value="MS5"/>
+            <enumeration value="MS6"/>
+            <enumeration value="MS7"/>
+            <enumeration value="MS8"/>
+            <enumeration value="MS9"/>
+            <enumeration value="MS10" />
+            <enumeration value="MS11" />
+            <enumeration value="MS12" />
+            <enumeration value="MS13" />
+            <enumeration value="MS14" />
+            <enumeration value="MS15" />
+            <enumeration value="MS16" />
+            <enumeration value="MS17" />
+            <enumeration value="MS18" />
+            <enumeration value="MS19" />
+            <enumeration value="MS20" />
+            <enumeration value="Other" />
+        </restriction>
+    </simpleType>
+    <complexType name="AuthorInfo">
+        <annotation>
+            <documentation>
+                Describes an author of a service specification or requirement.
+
+                Elements of an authorInfo are:
+
+                - id Unique identifier of the author.
+
+                - name Human readable name of the author.
+
+                - description Human readable description of the author.
+
+                - contactInfo Human readable contact information of the author.
+
+                - organizationId Unique identifier of the organization, the author belongs to.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="id" type="string" minOccurs="1" maxOccurs="1"/>
+            <element name="name" type="string" minOccurs="1" maxOccurs="1"/>
+            <element name="description" type="string" minOccurs="1" maxOccurs="1"/>
+            <element name="contactInfo" type="string" minOccurs="1" maxOccurs="1"/>
+            <element name="organizationId" type="string" minOccurs="0" maxOccurs="1"/>
+        </sequence>
+    </complexType>
+    <complexType name="VendorInfo">
+        <annotation>
+            <documentation>
+                Describes the vendor producing and/or providing the service instance.
+                Contains the same information as the AuthorInfo plus the isCommercial flag.
+
+                - isCommercial Optional indication on the commercial status of the vendor.
+            </documentation>
+        </annotation>
+        <complexContent>
+            <extension base="ServiceInstanceSchema:AuthorInfo">
+                <sequence>
+                    <element name="isCommercial" type="boolean" minOccurs="0" maxOccurs="1"/>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+    <complexType name="Transport">
+        <annotation>
+            <documentation>
+                Definition of the transport protocol used by the service design.
+
+                Elements of a transport are:
+
+                - name Human readable name.
+
+                - description Human readable description of the transport protocol used by the service design.
+
+                - protocol A non-formal string representation of the transport (e.g. http/rest, http/soap,.. )
+                that provides enough information to a service consumer to be able to connect.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="name" type="string" minOccurs="1" maxOccurs="1"/>
+            <element name="description" type="string" minOccurs="0" maxOccurs="1"/>
+            <element name="protocol" type="string" minOccurs="1" maxOccurs="1"/>
+        </sequence>
+    </complexType>
+    <complexType name="ServiceDataModel">
+        <annotation>
+            <documentation>
+                The ServiceDataModel describes the data model for the service design. The ServiceDataModel
+                describes in detail all the data structures being actually exchanged when service consumers
+                interact with a service instance that implements this design.
+
+                - name Human readable model name. The name shall be no longer than one line.
+
+                - description Human readable description of the model.
+
+                - model The model can e.g. be a WSDL file, a JSON API, or the like. It is recommended to
+                wrap the model in a CDATA section, and provide enough information in the name and
+                description to make clear how to deal with the content in model.
+
+                - modelType The modelType shall contain an abbreviation that indicates what technology is
+                used to describe the model. E.g. WSDL, JSON.
+
+                - modelRef The URL of an external file that defines the data model used.
+                Alternative to embedding the data model in the model attribute.
+
+                - Encoding The encoding of the model. Used when model is embedded in file.
+            </documentation>
+        </annotation>
+        <all>
+            <element name="name" type="string" minOccurs="1" maxOccurs="1"/>
+            <element name="description" type="string" minOccurs="0" maxOccurs="1"/>
+            <element name="modelType" type="string" minOccurs="1" maxOccurs="1"/>
+            <element name="model" type="string" minOccurs="0" maxOccurs="1"/>
+            <element name="modelRef" type="string" minOccurs="0" maxOccurs="1"/>
+            <element name="encoding" type="string" minOccurs="0" maxOccurs="1"/>
+        </all>
+    </complexType>
+    <complexType name="ServiceApiDoc">
+        <annotation>
+            <documentation>
+                The API documentation of the service. This should be in OpenAPI or other
+                widely used and standardized format. The elements of this are:
+
+                •	Encoding The encoding of the API documentation
+                •	apiDoc The actual API documentation if embedded (this is not preferred)
+                •	apiRef The reference to the location of the API documentation (this is preferred)
+
+                The API doc of the implemented designs should only be modified to exclude any
+                unsupported unrequired operations and to combine the API docs of multiple designs
+                if the service supports them
+            </documentation>
+        </annotation>
+        <all>
+            <element name="apiDoc" type="string" minOccurs="0" maxOccurs="1"/>
+            <element name="apiRef" type="string" minOccurs="0" maxOccurs="1"/>
+            <element name="encoding" type="string" minOccurs="0" maxOccurs="1"/>
         </all>
     </complexType>
 </schema>
